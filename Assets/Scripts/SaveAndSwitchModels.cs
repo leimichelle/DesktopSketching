@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SaveAndSwitchModels : MonoBehaviour {
 	public MeshFilter mf;
-	public InputManager IM;
+	public CameraController CC;
 	private int modelIdx;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		if (gameObject.transform.childCount > 0) {
 			modelIdx = 0;
-			IM.curModel = gameObject.transform.GetChild (modelIdx).gameObject;
+			CC.SetCurModel(gameObject.transform.GetChild (modelIdx).gameObject);
 			gameObject.transform.GetChild (modelIdx).gameObject.SetActive (true);
 		}
 	}
@@ -22,7 +22,7 @@ public class SaveAndSwitchModels : MonoBehaviour {
 			gameObject.transform.GetChild (modelIdx).gameObject.SetActive (false);
 			if (modelIdx + 1 < gameObject.transform.childCount) {
 				modelIdx++;
-				IM.curModel = gameObject.transform.GetChild (modelIdx).gameObject;
+				CC.SetCurModel(gameObject.transform.GetChild (modelIdx).gameObject);
 				gameObject.transform.GetChild (modelIdx).gameObject.SetActive (true);
 			}
 			else {
