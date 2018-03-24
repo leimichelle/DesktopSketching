@@ -197,11 +197,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verticesPerPoint: 6
-  stroke_width: 0.015
+  stroke_width: 0.003
   ns: 
   points: []
   normals: []
   timestamps: []
+  mat2: {fileID: 2100000, guid: 7d9ba5f9f6a310d47982fb72947dcc7c, type: 2}
 --- !u!1 &132677312
 GameObject:
   m_ObjectHideFlags: 0

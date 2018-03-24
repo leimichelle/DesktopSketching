@@ -14,6 +14,7 @@ public class Draw : MonoBehaviour {
     private MeshFilter mf;
     private Mesh stroke;
     private Material mat;
+    public Material mat2;
     // Use this for initialization
     void Start () {
         mf = GetComponent<MeshFilter>();
@@ -40,8 +41,7 @@ public class Draw : MonoBehaviour {
         RaycastHit hitInfo;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hitInfo)) {
-            AddNewPoint(ref hitInfo);
-            /*Vector3[] vertices;
+            Vector3[] vertices;
             Vector3[] normals;
             int[] triangles;
             if (mf.sharedMesh) {
@@ -90,18 +90,19 @@ public class Draw : MonoBehaviour {
                 Array.Resize(ref triangles, oldTriangleLength + verticesPerPoint * 6);
                 for (int quad = 0; quad < verticesPerPoint; ++quad) {
                     triangles[oldTriangleLength + quad * 6 + 0] = (oldVerticeLength - 6) + quad;
-                    triangles[oldTriangleLength + quad * 6 + 1] = (oldVerticeLength - 6) + (quad + 1) % verticesPerPoint;
-                    triangles[oldTriangleLength + quad * 6 + 2] = oldVerticeLength + quad;
+                    triangles[oldTriangleLength + quad * 6 + 1] = oldVerticeLength + quad; 
+                    triangles[oldTriangleLength + quad * 6 + 2] = (oldVerticeLength - 6) + (quad + 1) % verticesPerPoint;
                     triangles[oldTriangleLength + quad * 6 + 3] = (oldVerticeLength - 6) + (quad + 1) % verticesPerPoint;
-                    triangles[oldTriangleLength + quad * 6 + 4] = oldVerticeLength + (quad + 1) % verticesPerPoint;
-                    triangles[oldTriangleLength + quad * 6 + 5] = oldVerticeLength + quad;
+                    triangles[oldTriangleLength + quad * 6 + 4] = oldVerticeLength + quad;
+                    triangles[oldTriangleLength + quad * 6 + 5] = oldVerticeLength + (quad + 1) % verticesPerPoint;
                 }
             }
             stroke.vertices = vertices;
             stroke.normals = normals;
             stroke.triangles = triangles;
-            mf.sharedMesh = stroke;*/
-            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            mf.sharedMesh = stroke;
+            //Debug code
+            /*GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quad.transform.localScale = new Vector3(stroke_width, stroke_width, stroke_width);
             quad.transform.position = hitInfo.point;
             quad.transform.right = hitInfo.normal;
@@ -112,7 +113,13 @@ public class Draw : MonoBehaviour {
                 Vector3 bn = Vector3.Cross(tangent, hitInfo.normal);//First point of the stroke, no way to predict the tangent, so can only make a coarse
                 bn.Normalize();
                 quad.transform.up = bn;
-            }
+                GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                cylinder.transform.localScale = new Vector3(stroke_width/10f, stroke_width/10f, stroke_width/10f);
+                cylinder.transform.position = hitInfo.point;
+                cylinder.transform.up = tangent;
+                cylinder.GetComponent<Renderer>().material = mat2;
+            }*/
+            AddNewPoint(ref hitInfo);
         }
     }
 
