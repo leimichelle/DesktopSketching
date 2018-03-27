@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311256, g: 0.38073727, b: 0.35873553, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731128, g: 0.3807375, b: 0.35873574, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
   points: []
   normals: []
   timestamps: []
+  cursorSize: 32
 --- !u!33 &106774909
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -513,7 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 2
   zoomSensitivity: 0.2
-  translationSpeed: 0.1
+  translationSpeed: 0.005
   orbitDampening: 2
 --- !u!1 &447642949
 GameObject:
@@ -962,7 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a70d53bf27c48f1aadc0719ab6a655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curTexture: {fileID: 2800000, guid: 7eb1ae878200844ff991c09cb9137191, type: 3}
+  curTexture: {fileID: 2800000, guid: 9f78d7e1fa3b68845815fd20db8516b2, type: 3}
 --- !u!1 &1485858722
 GameObject:
   m_ObjectHideFlags: 0
