@@ -40,3 +40,7 @@
 /Volumes/SD card/Unity/DesktopSketching/Temp/bin/Debug/Unity.Cecil.Mdb.dll
 /Volumes/SD card/Unity/DesktopSketching/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll
 /Volumes/SD card/Unity/DesktopSketching/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.xml
+/Volumes/SD card/Unity/DesktopSketching/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Volumes/SD card/Unity/DesktopSketching/Temp/bin/Debug/Assembly-CSharp.dll
+/Volumes/SD card/Unity/DesktopSketching/obj/Debug/Assembly-CSharp.dll
+/Volumes/SD card/Unity/DesktopSketching/obj/Debug/Assembly-CSharp.dll.mdb

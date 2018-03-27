@@ -1,12 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/InputManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SaveAndSwitchModels.cs">
     <Files>
-      <File FileName="Assets/Scripts/InputManager.cs" Line="25" Column="1" />
+      <File FileName="Assets/Scripts/Draw.cs" Line="193" Column="1" />
+      <File FileName="Assets/Scripts/SaveAndSwitchModels.cs" Line="38" Column="20" />
+      <File FileName="Assets/Scripts/CameraController.cs" Line="19" Column="42" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/Draw.cs" line="260" column="1" />
+      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/Draw.cs" line="193" column="1" />
+      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/SaveAndSwitchModels.cs" line="21" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

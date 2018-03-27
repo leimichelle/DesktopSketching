@@ -51,8 +51,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\InputManager.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Draw.cs" />
      <Compile Include="Assets\Scripts\SaveAndSwitchModels.cs" />
+     <Compile Include="Assets\Scripts\ToggleCursor.cs" />
+     <Compile Include="Assets\Scripts\ToggleText.cs" />
  <Reference Include="UnityEngine.UIAutomation">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
  </Reference>
