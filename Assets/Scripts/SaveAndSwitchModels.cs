@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SaveAndSwitchModels : MonoBehaviour {
 	public GameObject sketch;
 	public CameraController CC;
+	public Slider slider;
 	private int modelIdx;
 	// Use this for initialization
 	void Start () {
@@ -29,6 +31,7 @@ public class SaveAndSwitchModels : MonoBehaviour {
 			else {
 				this.enabled = false;
 			}
+			slider.value = 1.0f;
 		}
 	}
 
@@ -55,6 +58,7 @@ public class SaveAndSwitchModels : MonoBehaviour {
 			Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer> ();
 			if (renderers.Length != 1) {
 				Debug.Log("Model" + rend.name + "has zero or more than one renderer.");
+				return;
 			}
 			else {
 				rend = renderers[0];
@@ -66,5 +70,23 @@ public class SaveAndSwitchModels : MonoBehaviour {
 		else {
 			rend.enabled = true;
 		}
+	}
+
+	public void ChangeTransparency(Slider s) {
+		//argument alpha ranges from 0.0 to 1.0
+		Renderer rend = gameObject.transform.GetChild (modelIdx).gameObject.GetComponent<Renderer> ();
+		if (rend == null) {
+			Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer> ();
+			if (renderers.Length != 1) {
+				Debug.Log("Model" + rend.name + "has zero or more than one renderer.");
+				return;
+			}
+			else {
+				rend = renderers[0];
+			}
+		}
+		Color c = rend.material.color;
+		c.a = s.normalizedValue;
+		rend.material.color = c;
 	}
 }

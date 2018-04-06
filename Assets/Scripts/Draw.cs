@@ -12,28 +12,25 @@ public class Draw : MonoBehaviour
 	public List<Vector3> points;
 	public List<Vector3> normals;
 	public List<float> timestamps;
+	public GameObject Stroke;
     public float cursorSize = 32.0f;
 	private int pointsInCurStroke = 0;
 	private MeshFilter mf;
-	private Mesh stroke;
+	private MeshCollider mc;
 
 	private enum Mode
 	{
-Drawing,
+		Drawing,
 		Erasing}
 
 	;
 
 	private Mode mode = Mode.Drawing;
-	private MeshCollider mc;
-	private bool drawnLastFrame;
+	private bool drawnLastFrame = false;
 	//private Material mat;
 	// Use this for initialization
 	void Start ()
 	{
-		mf = GetComponent<MeshFilter> ();
-		mc = GetComponent<MeshCollider> ();
-		stroke = new Mesh ();
 		ns = new List<int> ();
 		points = new List<Vector3> ();
 		normals = new List<Vector3> ();
@@ -58,7 +55,7 @@ Drawing,
 			}
             
 		}
-		if (Input.GetMouseButtonUp (0) && drawnLastFrame) {
+		if (drawnLastFrame && !drawn) {
 			ns.Add (pointsInCurStroke);
 			pointsInCurStroke = 0;
 		}
@@ -71,6 +68,9 @@ Drawing,
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		int layermask = 1 << 9;
 		if (Physics.Raycast (ray, out hitInfo, Mathf.Infinity, layermask)) {
+			if (!drawnLastFrame) {
+                CreateNewStroke();
+            }
 			Vector3[] vertices;
 			Vector3[] normals;
 			int[] triangles;
@@ -113,7 +113,7 @@ Drawing,
 				normals [oldVerticeLength + i] = (vertices [oldVerticeLength + i] - hitInfo.point).normalized;
 			}
 
-			if (!Input.GetMouseButtonDown (0)) {
+			if (drawnLastFrame) {
 				int oldTriangleLength = triangles.Length;
 				Array.Resize (ref triangles, oldTriangleLength + verticesPerPoint * 6);
 				for (int quad = 0; quad < verticesPerPoint; ++quad) {
@@ -125,6 +125,7 @@ Drawing,
 					triangles [oldTriangleLength + quad * 6 + 5] = oldVerticeLength + (quad + 1) % verticesPerPoint;
 				}
 			}
+			Mesh stroke = new Mesh ();
 			stroke.vertices = vertices;
 			stroke.normals = normals;
 			stroke.triangles = triangles;
@@ -169,109 +170,29 @@ Drawing,
             for (Vector3 row = col - new Vector3(0f, cursorSize/2.0f, 0f); row.y < botEnd; row.y+=1.0f) {
                 ray = Camera.main.ScreenPointToRay(row);
                 if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layermask)) {
-                    if (mf == null) {
-                        return;
-                    }
-                    int vIdx = 0;
-                    try {
-                        vIdx = mf.sharedMesh.triangles[hitInfo.triangleIndex * 3];
-                    }
-                    catch (IndexOutOfRangeException e) {
-                        Debug.Log(hitInfo.collider.name);
-                    }
-                    int pointIdx = vIdx / verticesPerPoint;
-                    int points = 0;
-                    int i;
-                    int size = ns.Count;
-                    for (i = 0; i < size; ++i) {
-                        points += ns[i];
-                        if (points >= pointIdx + 1) {
-                            break;
-                        }
-                    }
-                    int verticeLength = mf.sharedMesh.vertices.Length;
-                    Vector3[] vertices = new Vector3[0];
-                    Vector3[] normals = new Vector3[0];
-                    try {
-                        vertices = new Vector3[verticeLength - ns[i] * verticesPerPoint];
-                        normals = new Vector3[verticeLength - ns[i] * verticesPerPoint];
-                    }
-                    catch (OverflowException e) {
-                        int a = verticeLength;
-                        int b = ns[i];
-                        Debug.Log(a);
-                    }
-                    /*Vector3[] vertices = new Vector3[verticeLength - ns [i] * verticesPerPoint];
-                    Vector3[] normals = new Vector3[verticeLength - ns [i] * verticesPerPoint];*/
-                    int triangleLength = mf.sharedMesh.triangles.Length;
-                    int[] triangles = new int[0];
-                    try {
-                        triangles = new int[triangleLength - (ns[i] - 1) * verticesPerPoint * 6];
-                    }
-                    catch (OverflowException e) {
-                        int a = (ns[i] - 1) * verticesPerPoint * 6;
-                        Debug.Log(a);
-                    }
-                    /*Adding stuff uptil the stroke to be removed*/
-                    int numVertices = (points - ns[i]) * verticesPerPoint;
-                    int pt;
-                    for (pt = 0; pt < numVertices; ++pt) {
-                        vertices[pt] = mf.sharedMesh.vertices[pt];
-                        normals[pt] = mf.sharedMesh.normals[pt];
-                    }
-                    int numTriangles = (points - ns[i] - i) * verticesPerPoint * 6;
-                    int tpt;
-                    for (tpt = 0; tpt < numTriangles; ++tpt) {
-                        triangles[tpt] = mf.sharedMesh.triangles[tpt];
-                    }
-                    /*********************************************/
-                    /*Adding stuff after the stroke to be removed*/
-                    for (int ptSkipped = points * verticesPerPoint; ptSkipped < verticeLength; ++ptSkipped) {
-                        vertices[pt] = mf.sharedMesh.vertices[ptSkipped];
-                        normals[pt] = mf.sharedMesh.normals[ptSkipped];
-                        pt++;
-                    }
-                    int skipped = ns[i] * verticesPerPoint;
-                    for (int j = (points - i - 1) * verticesPerPoint * 6; j < triangleLength; ++j) {
-                        try {
-                            triangles[tpt] = mf.sharedMesh.triangles[j] - skipped;
-                        }
-                        catch(Exception e) {
-                            Debug.Log("error");
-                        }
-                        tpt++;
-                    }
-                    ns.RemoveAt(i);
-                    /*int prevStrokeSegs = 0;
-                    int curStrokeSegs = 0;
-                    for(int k=0; k < ns.Count; ++k){
-                        curStrokeSegs += ns[k] - 1;
-                        for (; prevStrokeSegs < curStrokeSegs; ++prevStrokeSegs) {
-                            for (int quad = 0; quad < verticesPerPoint; ++quad) {
-                                triangles[prevStrokeSegs * verticesPerPoint * 6 + quad * 6 + 0] = verticesPerPoint * (prevStrokeSegs - k) + quad;
-                                triangles[prevStrokeSegs * verticesPerPoint * 6 + quad * 6 + 1] = verticesPerPoint * (prevStrokeSegs - k + 1) + quad;
-                                triangles[prevStrokeSegs * verticesPerPoint * 6 + quad * 6 + 2] = verticesPerPoint * (prevStrokeSegs - k) + (quad + 1) % verticesPerPoint;
-                                triangles[prevStrokeSegs * verticesPerPoint * 6 + quad * 6 + 3] = verticesPerPoint * (prevStrokeSegs - k) + (quad + 1) % verticesPerPoint;
-                                triangles[prevStrokeSegs * verticesPerPoint * 6 + quad * 6 + 4] = verticesPerPoint * (prevStrokeSegs - k + 1) + quad;
-                                triangles[prevStrokeSegs * verticesPerPoint * 6 + quad * 6 + 5] = verticesPerPoint * (prevStrokeSegs - k + 1) + (quad + 1) % verticesPerPoint;
-                            }
-                        }
-                    }*/
-                    /*********************************************/
-                    mf.sharedMesh.Clear();
-                    stroke.vertices = vertices;
-                    stroke.normals = normals;
-                    stroke.triangles = triangles;
-                    mf.sharedMesh = stroke;
-                    if (mc.sharedMesh) {
-                        mc.sharedMesh = null;
-                    }
-                    mc.sharedMesh = stroke;
-                    return;
+					int strokeIdx = hitInfo.collider.gameObject.transform.GetSiblingIndex ();
+					int firstPt = 0;
+					for (int i=0; i<strokeIdx; ++i) {
+			            firstPt += ns[i];
+			        }
+					points.RemoveRange(firstPt, ns[strokeIdx]);
+					normals.RemoveRange(firstPt, ns[strokeIdx]);
+					timestamps.RemoveRange(firstPt, ns[strokeIdx]);
+					ns.RemoveAt(strokeIdx);
+					Destroy (hitInfo.collider.gameObject);
+					return;
                 }
             }
         }
 	}
+
+	void CreateNewStroke() {
+        GameObject stroke = Instantiate(Stroke);
+        mf = stroke.GetComponent<MeshFilter>();
+        mc = stroke.GetComponent<MeshCollider>();
+        stroke.transform.parent = gameObject.transform;
+		stroke.layer = gameObject.layer;
+    }
 
 	void AddNewPoint (ref RaycastHit hitInfo)
 	{

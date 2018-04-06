@@ -1,17 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SaveAndSwitchModels.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Draw.cs">
     <Files>
-      <File FileName="Assets/Scripts/Draw.cs" Line="193" Column="1" />
-      <File FileName="Assets/Scripts/SaveAndSwitchModels.cs" Line="38" Column="20" />
-      <File FileName="Assets/Scripts/CameraController.cs" Line="19" Column="42" />
+      <File FileName="Assets/Scripts/Draw.cs" Line="173" Column="79" />
+      <File FileName="Assets/Scripts/SaveAndSwitchModels.cs" Line="77" Column="70" />
+      <File FileName="Assets/Scripts/CameraController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/Draw.cs" line="260" column="1" />
-      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/Draw.cs" line="193" column="1" />
-      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/SaveAndSwitchModels.cs" line="21" column="1" />
+      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/SaveAndSwitchModels.cs" line="23" column="1" />
+      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/SaveAndSwitchModels.cs" line="88" column="1" />
+      <Breakpoint file="/Volumes/SD card/Unity/DesktopSketching/Assets/Scripts/Draw.cs" line="164" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
